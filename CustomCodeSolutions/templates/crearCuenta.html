@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registrar y Ver Transacciones</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        /* styles.css */
+.form-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.form-row label, .form-row input {
+    flex: 1;
+}
+.contenedor {
+    display: flex;
+    margin-left: 20px;
+    align-items: center;    /* Centra verticalmente */
+    height: 45vh;          /* Opcional, ajusta la altura del contenedor según tus necesidades */
+}
+label {
+    width: 150px; /* Define un ancho fijo para las etiquetas */
+    /* O puedes usar porcentajes para definir el ancho relativo:
+    width: 30%;
+    */
+    display: inline-block; /* Para que las etiquetas se muestren en línea y tengan el ancho especificado */
+}
+    </style>
+</head>
+
+<body>
+    <h1>Registrar Cuentas</h1>
+    <div class="contenedor">
+        <form method="post" id="cuenta-form">
+            {% csrf_token %}
+            {{ form.nombre.errors }}
+            <div class="form-row">
+                <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+                {{ form.nombre }}
+            </div>
+            
+            {{ form.alias.errors }}
+            <div class="form-row">
+                <label for="{{ form.alias.id_for_label }}">Alias:</label>
+                {{ form.alias }}
+            </div>
+            
+            {{ form.tipo.errors }}
+            <div class="form-row">
+                <label for="{{ form.tipo.id_for_label }}">Tipo:</label>
+                {{ form.tipo }}
+            </div>
+            
+            {{ form.saldo.errors }}
+            <div class="form-row">
+                <label for="{{ form.saldo.id_for_label }}">Saldo:</label>
+                {{ form.saldo }}
+            </div>
+            
+            {{ form.total_debe.errors }}
+            <div class="form-row">
+                <label for="{{ form.total_debe.id_for_label }}">Total Debe:</label>
+                {{ form.total_debe }}
+            </div>
+            
+            {{ form.total_haber.errors }}
+            <div class="form-row">
+                <label for="{{ form.total_haber.id_for_label }}">Total Haber:</label>
+                {{ form.total_haber }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Guardar Cuenta</button>
+        </form>
+        
+    </div>
+    
+    <h2>Cuentas</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Alias</th>
+                <th>Tipo</th>
+                <th>Saldo</th>
+                <th>Total Debe</th>
+                <th>Total Haber</th>
+                <th>Acciones</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for cuenta in cuentas %}
+            <tr>
+                <td>{{ cuenta.nombre }}</td>
+                <td>{{ cuenta.alias }}</td>
+                <td>{{ cuenta.tipo }}</td>
+                <td>{{ cuenta.saldo }}</td>
+                <td>{{ cuenta.total_debe }}</td>
+                <td>{{ cuenta.total_haber }}</td>
+                <td>
+                    <a href="/eliminarTransaccion/{{transaccion.id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>          
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+</body>
+</html>
+

@@ -21,5 +21,9 @@ from CustomCodeSolutions import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Inicio,name='inicio'),
-    path('Transacciones/', views.Transacciones,name="transacciones"),
+    path('catalogo_cuentas/', views.catalogo_cuentas, name='catalogo_cuentas'),
+    path('transacciones.html/', views.transaccion, name='transacciones.html'),
+    path('eliminarTransaccion/<id>/', views.eliminarTransaccion, name='eliminarTransaccion'),
+    path('crearCuenta/', views.crearCuenta, name='crearCuenta.html'),
+
 ]
