@@ -16,13 +16,13 @@
     </div>
     <div class="contenedorDeBotones">
         <div class="primerosDos">
-            <button class="botones" >Transacciones</button>
-            <button class="botones" >Libro Mayor</button>
-            <button class="botones">Catálago</button>
+            <button class="botones"  ><a href="{% url 'transaccion' %}">Transaccion</a></button> 
+            <button class="botones"><a href="{% url 'mayor' %}">Libro Mayor</a></button>
+            <button class="botones"><a href="{% url 'catalogo' %}">Catalogo</a></button>
         </div>
         <div class="segundosDos">
-            <button class="botones">Generar Estados financieros</button>
-            <button class="botones">Sistema de costeo</button>
+            <button class="botones"><a href="{% url 'estadosFinancieros' %}">Estados Financieros</a></button>
+            <button class="botones"><a href="{% url 'sistemaCosteo' %}">Sistema de costeo</a></button>
         </div>
     </div>
 </div>

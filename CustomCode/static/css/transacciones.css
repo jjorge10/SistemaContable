@@ -1,0 +1,79 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/*body {
+    background-image: url("https://www.evolve-it.com.mx/wp-content/uploads/2016/11/sistemas-contables-3-3.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+  }
+  */
+
+.contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.titulo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+  body{
+    background-color: #cfcfcf;
+  }
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+
+.titulo {
+    font-family: "Open Sans", sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  
+.transacciones{
+  max-width: 500px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(82, 202, 13);
+  flex-wrap: wrap;
+}
+
+.debe-haber{
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.descripcion{
+  margin: 20px
+}
+
+#descripcion{
+  width: 600px;
+
+}
+
+.botones{
+  display: flex;
+  justify-content: end;
+}
+
+button{
+  margin-right:10px ;
+}

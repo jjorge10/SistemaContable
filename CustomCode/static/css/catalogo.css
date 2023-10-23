@@ -1,0 +1,27 @@
+.contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.titulo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+   
+}
+
+  body{
+    background-color: #cfcfcf;
+  }
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.tabla{
+    margin: 20px;
+}
