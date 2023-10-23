@@ -21,25 +21,18 @@
         </div>
         <div class="cuentas">
             <p>Elija una cuenta</p>
-            <select class="catalogo">
-                <option selected="selected">Caja</option>
+            <select class="catalogo" id="catalogo">
+                <!--<option selected="selected">Caja</option>
                 <option>Acreedores Diversos</option>
                 <option>Inventario de Software</option>
                 <option>Cuentas por pagar</option>
                 <option>Deudores Diversos</option>
                 <option>Capital Social</option>
-
+                -->
               </select>
               <p>Elija una cuenta</p>
-              <select class="catalogo">
-                  <option selected="selected">Caja</option>
-                <option>Acreedores Diversos</option>   
-                <option>Inventario de Software</option>
-                <option>Cuentas por pagar</option>
-                <option>Deudores Diversos</option>
-                <option>Capital Social</option>
-                <option>IVA Acreditable</option>
-                <option></option>
+              <select class="catalogo" id="catalogo">
+                  
               </select>
         </div>
     </div>
@@ -47,5 +40,30 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
    
+    <script>
+        let cuentas = JSON.parse('{{ datos|safe }}');
+        console.log(cuentas);
+
+        var selects = document.querySelectorAll('.catalogo');
+
+        // Recorre los datos de cuentas y crea opciones
+       /* for (var i = 0; i < cuentas.length; i++) {
+            var option = document.createElement('option');
+            option.value = cuentas[i].cod_cuenta;
+            option.text = cuentas[i].nombre_cuenta;
+            select.appendChild(option);
+        } */
+        selects.forEach(function(select) {
+            for (var cuentaKey in cuentas) {
+                if (cuentas.hasOwnProperty(cuentaKey)) {
+                    var option = document.createElement('option');
+                    var cuenta = cuentas[cuentaKey];
+                    option.value = cuenta.cod_cuenta;
+                    option.text = cuenta.nombre_cuenta;
+                    select.appendChild(option);
+                }
+            }
+        })
+    </script>
 </body>
 </html>
