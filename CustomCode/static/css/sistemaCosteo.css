@@ -1,35 +1,74 @@
-*{
-    margin: 0;
-    padding: 0;
+body {
+  font-family: sans-serif;
+  background-color: #fff;
 }
 
-/*body {
-    background-image: url("https://www.evolve-it.com.mx/wp-content/uploads/2016/11/sistemas-contables-3-3.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-
-  }
-  */
-
-  body{
-  background-color: #cfcfcf;
-  }
-
-h1{
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
+.contenedor {
+  width: 960px;
+  margin: 0 auto;
 }
-
-  
 
 .titulo {
-    font-family: "Open Sans", sans-serif;
-    font-size: 28px;
-    font-weight: bold;
-    padding: 20px;
-    text-align: center;
-    color: rgb(0, 0, 0);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  }
-  
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+.tablas-costos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabla-costos-directos {
+  width: 30%;
+  margin-left: 200px !important;
+}
+
+.tabla-mano-de-obra {
+  width: 40%;
+}
+
+.tabla-costos-indirectos {
+  width: 30%;
+}
+
+.tabla-final {
+  width: 100%;
+  margin-top: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+th {
+  background-color: #eee;
+}
+
+.tabla-final th, .tabla-final td {
+  font-weight: bold;
+}
+
+input, button {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0069d9;
+}

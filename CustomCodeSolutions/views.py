@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Transacciones
 from django.http.response import JsonResponse
+from .models import Costos_Directos,CostosIndirectos, Mano_de_Obra      
 
 
 # Create your views here.
@@ -24,4 +25,8 @@ def estadosFinancieros(request):
     return render(request,'CustomCodeSolutions/estadosFinancieros.html')
 
 def SistemaCosteo(request):
+    costos_directos = Costos_Directos.objects.all()
+    mano_de_obra = Mano_de_Obra.objects.all()
+    costos_indirectos = CostosIndirectos.objects.all()
+
     return render(request,'CustomCodeSolutions/sistemaCosteo.html')

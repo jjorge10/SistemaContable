@@ -6,13 +6,141 @@
     <title>Sistema contable</title>
     {% load static %}
     <link rel="stylesheet" href='{% static "css/sistemaCosteo.css" %}'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-    <div class="contenedor">
-        <div class="titulo">
+   
+    <div class="contenedo">
+        <div class="titul">
             <h1>Sistema de costeo</h1>
         </div>
+        <br>
+        <br>
+        <div class="form">
+        <form action="" method=post>
+            <div class="fecha-producto-cliente">
+            {% csrf_token %}
+            <label for="fecha-ex">Fecha</label>
+            <input type="text" id="fecha-ex" name="fecha-ex">
+            <label for="producto">Producto</label>
+            <input type="text" name="producto" id="producto">
+            <label for="cliente">Cliente</label>
+            <input type="text" name="cliente" id="cliente">
+            <button>Agregar a la tabla final</button>
+            </div>
+         <br>
+            <h2>Registro de costos Directos</h2>
+            <br>
+            <div class="costos-directos">
+            <label for="concepto">Concepto</label>
+            <input type="text" name="concepto" id="concepto">
+            <label for="importe">Importe</label>
+            <input type="text" name="importe" id=""importe>
+           <button>Agregar</button>
+            </div>
+        </div>
+            <br>
+            <h2>Regristro de mano de obra directa</h2>
+            <br>
+            <div class="mano-de-obra">
+            <label for="trabajador">Trabajador</label>
+            <input type="trabajador" name="trabajador" id="trabajador">
+            <label for="horas-trabajadas">Horas Trabajas</label>
+            <input type="trabajador" name="horas-trabajadas" id="horas-trabajadas">
+            <label for="costo-hora">Costo por hora</label>
+            <input type="trabajador" name="costo-hora" id="costo-hora">
+            <button>Agregar</button>
+         </div>
+            <br>
+            <div class="costos-indirectos"></div>
+            <h2>Costos indirectos</h2>
+            <br>
+            <label for="importe">Importe</label>
+            <input type="text" name="importe" id="importe">
+            <button>Agregar</button>
+            </div>
+        </form>
+        <br>
+        <br>
+        <br>
+<div class="tablas-costos">
+    <br>
+    <h3></h3>
+    <div class="tabla-costos-directos table table-striped">
+          <table>
+            <tr>
+                <th>Concepto</th>
+                <th>Importe</th>
+            </tr>
+            <tr>
+                <td>Equipo y Electricidad</td>
+                <td>12000</td>
+            </tr>
+        
+          </table>
     </div>
    
+    <div class="tabla-mano-de-obra table table-striped">
+            <table>
+                <tr>
+                    <th>Trabajador</th>
+                    <th>Tiempo en horas</th>
+                    <th>Costo por horas</th>
+                    <th>Total mano de obra</th>
+                </tr>
+                <tr>
+                    <td>bla</td>
+                    <td>bla</td>
+                    <td>bla</td>
+                    <td>bla</td>
+                </tr>
+            </table>
+    </div>
+    <div class="tabla-costos-indirectos table-striped">
+        <table>
+            <tr>
+                <th>Importe</th>
+            </tr>
+            <tr>
+                <td>123</td>
+            </tr>
+        </table>
+        <br>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+      <div class="tabla-final table table-striped">
+        <br>
+        <table>
+            <tr>
+                <th>Fecha</th>
+                 <th>Producto</th>
+                 <th>Cliente</th>
+                 <th>Costos Indirectos de Fabricación</th>
+                 <th>Mano de Obra Directa</th>
+                 <th>Costos Indirectos</th>
+                 <th>Costo total</th>
+            </tr>
+            <tr>
+                <td>23/21/232</td>
+                <td>Inflametric</td>
+                <td>Oscar Hernandez</td>
+                <td>122</td>
+                <td>23232</td>
+                <td>4343</td>
+                <td>3243</td>
+            </tr>
+         
+        </table>
+    </div>
+</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>
