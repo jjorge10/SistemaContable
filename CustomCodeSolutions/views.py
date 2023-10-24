@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
 from .forms import TransaccionForm, CuentaForm
-from .models import *
-from .models import TipoCuenta, Cuenta
+from CustomCodeSolutions import models
+
 
 # Create your views here.
 def Inicio(request):
@@ -18,19 +18,19 @@ def transaccion(request):
     else:
         form = TransaccionForm()
 
-    transacciones = Transaccion.objects.all()
+    transacciones = models.transaccion.objects.all()
     return render(request, 'transacciones.html', {'form': form, 'transacciones': transacciones})
     
 
 def eliminarTransaccion(request, id):
-    t = Transaccion.objects.get(id=id)
+    t = models.transaccion.objects.get(id=id)
     t.delete()
 
     return redirect('transacciones.html')
     
 def catalogo_cuentas(request):
-    tipos_cuenta = TipoCuenta.objects.all()
-    cuentas = Cuenta.objects.all()
+    tipos_cuenta = models.tipo_cuenta.objects.all()
+    cuentas = models.cuenta.objects.all()
     return render(request, 'catalogo_cuentas.html', {'tipos_cuenta': tipos_cuenta, 'cuentas': cuentas})
 
 
@@ -43,7 +43,7 @@ def crearCuenta(request):
     else:
         form = CuentaForm()
 
-    cuentas = Cuenta.objects.all()
+    cuentas = models.cuenta.objects.all()
     return render(request, 'crearCuenta.html', {'form': form, 'cuentas': cuentas})
 
 
