@@ -1,6 +1,12 @@
 from pickle import FALSE
 from django.db import models
 
+def get_default_value():
+    # Calcula el valor por defecto consultando el valor más alto en la tabla
+    last_record = transaccion.objects.aggregate(models.Max('num_transaccion'))
+    last_value = last_record['num_transaccion__max'] or 0  # En caso de que no haya registros
+    return last_value + 1
+
 
 # Create your models here.
 class tipo_cuenta(models.Model):
@@ -32,7 +38,7 @@ class cuenta(models.Model):
         return self.nombre_cuenta
 
 class transaccion(models.Model):
-    num_transaccion= models.IntegerField(primary_key=True, unique=True, null=False)
+    num_transaccion= models.IntegerField(primary_key=True, unique=True, null=False, default=get_default_value)
     descripcion=models.CharField(max_length=500, null=False)
     fecha= models.DateField(unique=False, null=False)
     total_debe_tran= models.FloatField(null=False)
@@ -42,6 +48,6 @@ class cuenta_transaccion(models.Model):
     id_ct= models.AutoField(primary_key=True, unique=True, null=False)
     num_transaccion= models.ForeignKey(transaccion, on_delete=models.CASCADE, null=False)
     cod_cuenta= models.ForeignKey(cuenta, on_delete=models.CASCADE, null=False)
-    debe = models.FloatField(null=False)
-    haber = models.FloatField(null=False)
+    debe = models.FloatField(null=False,default=0.0)
+    haber = models.FloatField(null=False, default=0.0)
 

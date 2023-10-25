@@ -38,6 +38,13 @@ label {
     <div class="contenedor">
         <form method="post" id="transaccion-form">
             {% csrf_token %}
+
+      <!--      {{ form.num_transaccion.errors }}
+            <div class="form-row">
+                <label for="{{ form.num_transaccion.id_for_label }}">Num. Transacción:</label>
+                {{ form.num_transaccion }}
+            </div>
+
             {{ form.descripcion.errors }}
             <div class="form-row">
                 <label for="{{ form.descripcion.id_for_label }}">Descripción:</label>
@@ -49,31 +56,80 @@ label {
                 <label for="{{ form.fecha.id_for_label }}">Fecha:</label>
                 {{ form.fecha }}
             </div>
-            
-            {{ form.total_debe.errors }}
+<!Cuenta Transaccion----------------------------------------------------------------------------------------------
+
+            {{ formct.cod_cuenta.errors }}
             <div class="form-row">
-                <label for="{{ form.total_debe.id_for_label }}">Total Debe:</label>
-                {{ form.total_debe }}
+                <label for="{{ form.cod_cuenta.id_for_label }}">Cuenta:</label>
+                {{ formct.cod_cuenta }}
+            </div>
+
+            {{ formct.debe.errors }}
+            <div class="form-row">
+                <label for="{{ formct.debe.id_for_label }}">Debe:</label>
+                {{ formct.debe }}
             </div>
             
-            {{ form.total_haber.errors }}
+            {{ formct.haber.errors }}
             <div class="form-row">
-                <label for="{{ form.total_haber.id_for_label }}">Total Haber:</label>
-                {{ form.total_haber }}
+                <label for="{{ formct.haber.id_for_label }}">Haber:</label>
+                {{ formct.haber }}
             </div>
+        -->
+<!------------------------------------------------------------------------------------------->
+            <div class="container px-4 text-center">
+                <div class="row gx-5">
+                <div class="col">
+                <div class="p-3">
+
+                    {{ form.num_transaccion.errors }}
+                    <div class="form-row">
+                        <label for="{{ form.num_transaccion.id_for_label }}">Num. Transacción:</label>
+                        {{ form.num_transaccion }}
+                    </div>
+
+                    {{ form.descripcion.errors }}
+                    <div class="form-row">
+                        <label for="{{ form.descripcion.id_for_label }}">Descripción:</label>
+                        {{ form.descripcion }}
+                    </div>
+                    
+                    {{ form.fecha.errors }}
+                    <div class="form-row">
+                        <label for="{{ form.fecha.id_for_label }}">Fecha:</label>
+                        {{ form.fecha }}
+                    </div>
+                </div>
+                </div>
+                <!----------------------------------------------------------------------------------------------->
+                    {% for cuenta_form in formct %}
+                    <div class="col">
+                        <div class="p-3">
+                            {{ cuenta_form.cod_cuenta.errors }}
+                            <div class="form-row">
+                                <label for="{{ cuenta_form.cod_cuenta.id_for_label }}">Cuenta:</label>
+                                {{ cuenta_form.cod_cuenta }}
+                            </div>
+                            
+                            {% if forloop.counter == 1 %}
+                            <label for="{{ cuenta_form.debe.id_for_label }}">Debe:</label>
+                            {{ cuenta_form.debe }}
+                            {% else %}
+                            <label for="{{ cuenta_form.haber.id_for_label }}">Haber:</label>
+                            {{ cuenta_form.haber }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                
+
+                <!--------------------------------------------------------------------------------->
+                
             
-            {{ form.registra.errors }}
-            <div class="form-row">
-                <label for="{{ form.registra.id_for_label }}">Registra:</label>
-                {{ form.registra }}
+                <!-------------------------------------------------------------------------------------------->
+                </div>
             </div>
-            
-            {{ form.cuenta.errors }}
-            <div class="form-row">
-                <label for="{{ form.cuenta.id_for_label }}">Cuenta:</label>
-                {{ form.cuenta }}
-            </div>
-            
+
             <button type="submit" class="btn btn-primary">Guardar Transacción</button>
         </form>
         
@@ -83,24 +139,22 @@ label {
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Descripción</th>
                 <th>Fecha</th>
+                <th>Numero</th>
+                <th>Descripción</th>
                 <th>Total Debe</th>
                 <th>Total Haber</th>
-                <th>Registro</th>
-                <th>Nombre Cuenta</th>
                 <th>Acciones</th> 
             </tr>
         </thead>
         <tbody>
             {% for transaccion in transacciones %}
             <tr>
-                <td>{{ transaccion.descripcion }}</td>
                 <td>{{ transaccion.fecha }}</td>
-                <td>{{ transaccion.total_debe }}</td>
-                <td>{{ transaccion.total_haber }}</td>
-                <td>{{ transaccion.registra }}</td>
-                <td>{{ transaccion.cuenta }}</td>
+                <td>{{ transaccion.num_transaccion }}</td>
+                <td>{{ transaccion.descripcion }}</td>
+                <td>{{ transaccion.total_debe_tran }}</td>
+                <td>{{ transaccion.total_haber_tran }}</td>
                 <td>
                     <a href="/eliminarTransaccion/{{transaccion.id}}" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>          
@@ -109,6 +163,26 @@ label {
         </tbody>
     </table>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formulario = document.getElementById('transaccion-form');
+    
+            formulario.addEventListener('submit', function(event) {
+                event.preventDefault();  // Evita el envío del formulario
+    
+                const formData = new FormData(formulario);
+    
+                // Convierte los datos del formulario en un objeto JavaScript
+                const formDataObject = {};
+                formData.forEach((value, key) => {
+                    formDataObject[key] = value;
+                });
+    
+                console.log('Datos del formulario POST:', formDataObject);
+            });
+        });
+    </script>
+    
     
 </body>
 </html>

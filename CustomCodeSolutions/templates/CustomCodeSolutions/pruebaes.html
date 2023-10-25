@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        /* styles.css */
+        .form-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .form-row label, .form-row input {
+            flex: 1;
+        }
+        .contenedor {
+            display: flex;
+            margin-left: 20px;
+            align-items: center;    /* Centra verticalmente */
+            height: 45vh;          /* Opcional, ajusta la altura del contenedor según tus necesidades */
+        }
+        label {
+            width: 150px; /* Define un ancho fijo para las etiquetas */
+            /* O puedes usar porcentajes para definir el ancho relativo:
+            width: 30%;
+            */
+            display: inline-block; /* Para que las etiquetas se muestren en línea y tengan el ancho especificado */
+        }
+    </style>
+</head>
+<body>
+    Balance General
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Código de Cuenta</th>
+            <th>Nombre de Cuenta</th>
+            <th>Debe</th>
+            <th>Haber</th>
+        </tr>
+        {% for key, cuenta in datos_balance.items %}
+        <tr>
+            <td>{{ cuenta.cod_cuenta }}</td>
+            <td>{{ cuenta.nombre_cuenta }}</td>
+            <td>{% if cuenta.lado_saldo == 'debe' %}{{ cuenta.saldo_cuenta }}{% endif %}</td>
+            <td>{% if cuenta.lado_saldo == 'haber' %}{{ cuenta.saldo_cuenta }}{% endif %}</td>
+
+        </tr>
+        {% endfor %}
+        <tr>
+            <td> </td>
+            <td>total</td>
+            <td>{{ pie_balance.total_debe }}</td>
+            <td>{{ pie_balance.total_haber }}</td>
+        </tr>
+    </table>
+    Estado de Resultados
+    <!--Tabla Para el Estado de Resultados------------------------------------------->
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Código de Cuenta</th>
+            <th>Nombre de Cuenta</th>
+            <th>Debe</th>
+            <th>Haber</th>
+        </tr>
+        {% for key, cuenta in datos_resultado.items %}
+        <tr>
+            <td>{{ cuenta.cod_cuenta }}</td>
+            <td>{{ cuenta.nombre_cuenta }}</td>
+            <td>{% if cuenta.lado_saldo == 'debe' %}{{ cuenta.saldo_cuenta }}{% endif %}</td>
+            <td>{% if cuenta.lado_saldo == 'haber' %}{{ cuenta.saldo_cuenta }}{% endif %}</td>
+
+        </tr>
+        {% endfor %}
+        <tr>
+            <td> </td>
+            <td>total</td>
+            <td>{{ pie_resultado.total_debe }}</td>
+            <td>{{ pie_resultado.total_haber }}</td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td>Utilidad o Perdida</td>
+            <td>{% if pie_resultado.lado_resultado == 'debe' %}{{ pie_resultado.resultado_ejerc }}{% endif %}</td>
+            <td>{% if pie_resultado.lado_resultado == 'haber' %}{{ pie_resultado.resultado_ejerc  }}{% endif %}</td>
+        </tr>
+    </table>
+    <!-------------------------------------------------------------------------------------------------->
+    <script>
+        //let cuentas = JSON.parse('{{ datos_balance|safe }}');
+        //let res = JSON.parse('{{ datos_resultado|safe }}')
+       // console.log(cuentas);
+        //console.log(res);
+    </script>
+</body>
+</html>
