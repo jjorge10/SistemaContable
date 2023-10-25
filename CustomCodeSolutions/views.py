@@ -122,9 +122,9 @@ def create_tabla_final(request):
         # Crear y guardar la tabla final
         tabla_final = Tabla_Final(fecha=fecha_ex, producto=productox, cliente=clientex, costos_directos=suma_costo, mano_de_obra=suma_mano, costos_indirectos=suma_indirectos, costo_total=costo_total)
         tabla_final.save()
-        # Costos_Directos.objects.all.delete()
-        # Mano_de_Obra.objects.all.delete()
-        # CostosIndirectos.objects.all.delete()
+        Costos_Directos.objects.all().delete()
+        Mano_de_Obra.objects.all().delete()
+        CostosIndirectos.objects.all().delete()
 
         return redirect('/Sistemacosteo/')
     
