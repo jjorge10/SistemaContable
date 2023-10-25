@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Contable</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href='{% static "css/transacciones.css" %}''>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        <div class="titulo">
+        <h1>Transacciones</h1>
+        </div>
+        <div class="Transacciones">
+            <div class="cuenta-fecha">
+            <label class="transacciones-titulo">Elegir cuenta</label>
+            <select name="listbox" id="listbox">
+            <option value="Opción 1">Caja</option>
+            <option value="Opción 2">Inventario de Software</option>
+            <option value="Opción 3">IVA Credito</option>
+            <option value="Opción 4">Cuentas por pagar</option>
+            <option value="Opción 5">IVA Débito</option>
+            </select>
+            <label for="fecha">Selecciona una fecha:</label>
+            <input type="text" name="txtFehca" id="txtFecha">
+        </div>
+        <div class="debe-haber">
+            <label for="">Debe</label>
+            <input type="text" >
+            <label for="">Haber</label>
+            <input type="text" >
+        </div>
+        <div class="descripcion">
+            <label for="">Descripcion</label>
+            <input type="text" id="descripcion">
+        </div>
+        <div class="botones">
+            <button>Agregar Facturacion</button>
+            <button> Modificar </button>
+            <button>Eliminar</button>
+        </div>
+            <div class="tabla-div">
+                <table class="tabla">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Descripcion</th>
+                            <th>Debe</th>
+                            <th>Haber</th>
+                        </tr>
+                     
+                        <tr>
+                            {% for transaccion in transacciones %}
+                            <td>{{transaccion.fecha}}</td>
+                            <td>{{transaccion.descripcion}}</td>
+                            <td>{{transaccion.debe}}</td>
+                            <td>{{transaccion.haber}}</td>
+                            {% endfor %}
+                         </tr>
+                       
+                </table>
+            </div>
+     </div>
+        
+    </div>
+
+    
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+   
+</body>
+</html>

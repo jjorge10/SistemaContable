@@ -1,0 +1,70 @@
+body {
+  font-family: sans-serif;
+  background-color: #fff;
+}
+
+.contenedor {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+.tablas-costos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabla-costos-directos,
+.tabla-mano-de-obra,
+.tabla-costos-indirectos,
+.tabla-final {
+  margin: 0 auto;
+  margin-right: 20px;
+}
+
+.tres-tablas {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 40px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+th {
+  background-color: #eee;
+}
+
+.tabla-final th, .tabla-final td {
+  font-weight: bold;
+}
+
+input, button {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0069d9;
+}
