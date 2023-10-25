@@ -31,7 +31,8 @@ def SistemaCosteo(request):
     mano_de_obra = Mano_de_Obra.objects.all()
     costos_indirectos = CostosIndirectos.objects.all()
 
-    return render(request,'CustomCodeSolutions/sistemaCosteo.html')
+
+    return render(request,'CustomCodeSolutions/sistemaCosteo.html', {'costos_directos': costos_directos, 'mano_de_obra': mano_de_obra, 'costos_indirectos': costos_indirectos})
 
 
 
@@ -48,15 +49,13 @@ def create_costos_directos(request):
         # Guardar el objeto de costos directos en la base de datos
         costos_directos.save()
 
-        # Obtener todos los datos de costos directos de la base de datos
-        costeo_directo = Costos_Directos.objects.all()
 
         # Redireccionar al usuario a la página principal
         return redirect('/Sistemacosteo/')
 
-    # Pasar el contexto 'costeo_directo' a la plantilla
-    context = {'costeo_directo': costeo_directo}
-    return render(request, 'costos_directos/create.html', context)
+    
+    
+    return render(request, 'costos_directos/create.html')
 
 
 def create_mano_de_obra(request):
@@ -85,12 +84,8 @@ def create_costos_indirectos(request):
     if request.method == 'POST':
         # Obtener los datos del formulario
         importe = request.POST['importe']
-
-
-
         # Crear un nuevo objeto de costos directos
         costo_indirectos = CostosIndirectos(importe=importe)
-
         # Guardar el objeto de costos directos en la base de datos
         costo_indirectos.save()
 
@@ -98,3 +93,5 @@ def create_costos_indirectos(request):
         return redirect('/Sistemacosteo/')
 
     return render(request, 'costos_inderectos/create.html')
+
+

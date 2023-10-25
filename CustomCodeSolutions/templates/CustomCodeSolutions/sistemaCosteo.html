@@ -75,19 +75,20 @@
     <br>
     <h3></h3>
     <div class="tabla-costos-directos table table-striped">
-          <table>
+        <table>
             <tr>
                 <th>Concepto</th>
                 <th>Importe</th>
             </tr>
-            {% for cd in costeo_directo %}
+            {% for dato in costos_directos %}
             <tr>
-              <td>{{cd.concepto}}</td>
-             <td>{{cd.importe}}</td>
+                <td>{{ dato.concepto }}</td>
+                <td>{{ dato.importe }}</td>
             </tr>
             {% endfor %}
-          </table>
+        </table>
     </div>
+    
    
     <div class="tabla-mano-de-obra table table-striped">
             <table>
@@ -97,12 +98,14 @@
                     <th>Costo por horas</th>
                     <th>Total mano de obra</th>
                 </tr>
+                {% for obra in mano_de_obra %}
                 <tr>
-                    <td>bla</td>
-                    <td>bla</td>
-                    <td>bla</td>
-                    <td>bla</td>
+                    <td>{{ obra.nombre_del_trabajador }}</td>
+                    <td>{{ obra.tiempo_de_trabajo }}</td>
+                    <td>{{ obra.costo_por_hora }}</td>
+                    <td>{{ obra.Total_Trabajador }}</td>
                 </tr>
+                {% endfor %}
             </table>
     </div>
     <div class="tabla-costos-indirectos table-striped">
@@ -110,9 +113,11 @@
             <tr>
                 <th>Importe</th>
             </tr>
+            {% for imp in costos_indirectos %}
             <tr>
-                <td>123</td>
+                <td>{{ imp.importe }}</td>
             </tr>
+            {% endfor %}
         </table>
         <br>
     </div>
