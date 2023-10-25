@@ -4,6 +4,9 @@ from django.http.response import JsonResponse
 from .models import Costos_Directos,CostosIndirectos, Mano_de_Obra , Tabla_Final
 from django.views.generic.edit import CreateView 
 from decimal import Decimal  # Añadir importación Decimal
+from django.db.models import Sum
+
+
 
 
 # Create your views here.
@@ -12,7 +15,7 @@ def Inicio(request):
 
 def Transaccion(request):
      transacciones = Transacciones.objects.all()
-     return render(request,'CustomCodeSolutions/transaccion.html',{'transaccion': transacciones})
+     return render(request,'CustomCodeSolutions/transaccion.html',{'transacciones': transacciones})
 
    
 
@@ -30,9 +33,10 @@ def SistemaCosteo(request):
     costos_directos = Costos_Directos.objects.all()
     mano_de_obra = Mano_de_Obra.objects.all()
     costos_indirectos = CostosIndirectos.objects.all()
+    tabla  = Tabla_Final.objects.all()
 
 
-    return render(request,'CustomCodeSolutions/sistemaCosteo.html', {'costos_directos': costos_directos, 'mano_de_obra': mano_de_obra, 'costos_indirectos': costos_indirectos})
+    return render(request,'CustomCodeSolutions/sistemaCosteo.html', {'costos_directos': costos_directos, 'mano_de_obra': mano_de_obra, 'costos_indirectos': costos_indirectos, 'tabla': tabla})
 
 
 
@@ -96,44 +100,35 @@ def create_costos_indirectos(request):
 
 
 
-
 def create_tabla_final(request):
     if request.method == 'POST':
         fecha_ex = request.POST['fecha-ex']
-        producto = request.POST['producto']
-        cliente = request.POST['cliente']
+        productox = request.POST['producto']
+        clientex = request.POST['cliente']
 
         # Obtener costos directos
-        costos_directos = Costos_Directos.objects.all()
-        suma_costo = Decimal(0)  # Inicializar como Decimal
-
-        for costo_d in costos_directos:     
-            suma_costo += costo_d.importe
+        suma_costo = Costos_Directos.objects.aggregate(total_importes=Sum('importe'))['total_importes']
 
         # Obtener costo de mano de obra
-        costo_mano = Mano_de_Obra.objects.all()
-        suma_mano = Decimal(0)  # Inicializar como Decimal
-
-        for mano in costo_mano:
-            suma_mano += mano.Total_Trabajador
+        suma_mano = Mano_de_Obra.objects.aggregate(total_mano_de_obra=Sum('Total_Trabajador'))['total_mano_de_obra'] or 0
 
         # Obtener costos indirectos
         costos_indirectos = CostosIndirectos.objects.all()
-        suma_indirectos = Decimal(0)  # Inicializar como Decimal
-
-        for costos_i in costos_indirectos:
-            suma_indirectos += costos_i.as_decimal()  # Convertir a número decimal antes de sumar
+        suma_indirectos = costos_indirectos.aggregate(total=Sum('importe'))['total'] or Decimal(0)
 
         # Calcular el costo total
         costo_total = suma_costo + suma_mano + suma_indirectos
 
         # Crear y guardar la tabla final
-        tabla_final = Tabla_Final(fecha=fecha_ex, producto=producto, cliente=cliente, costos_directos=suma_costo, mano_de_obra=suma_mano, costos_indirectos=suma_indirectos, costo_total=costo_total)
+        tabla_final = Tabla_Final(fecha=fecha_ex, producto=productox, cliente=clientex, costos_directos=suma_costo, mano_de_obra=suma_mano, costos_indirectos=suma_indirectos, costo_total=costo_total)
         tabla_final.save()
+        # Costos_Directos.objects.all.delete()
+        # Mano_de_Obra.objects.all.delete()
+        # CostosIndirectos.objects.all.delete()
 
         return redirect('/Sistemacosteo/')
-
-    return render(request, 'costo_total/create.html')
+    
+    return render(request, 'CustomCodeSolutions/sistemaCosteo.html')
 
 
 

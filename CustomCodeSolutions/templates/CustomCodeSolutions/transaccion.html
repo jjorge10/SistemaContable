@@ -43,22 +43,22 @@
             <button>Eliminar</button>
         </div>
             <div class="tabla-div">
-                <table class="tabla">
+                <table class="tabla table table-striped">
                         <tr>
                             <th>Fecha</th>
                             <th>Descripcion</th>
                             <th>Debe</th>
                             <th>Haber</th>
                         </tr>
-                     
+                        
                         <tr>
                             {% for transaccion in transacciones %}
                             <td>{{transaccion.fecha}}</td>
                             <td>{{transaccion.descripcion}}</td>
                             <td>{{transaccion.debe}}</td>
                             <td>{{transaccion.haber}}</td>
-                            {% endfor %}
                          </tr>
+                         {% endfor %}
                        
                 </table>
             </div>
