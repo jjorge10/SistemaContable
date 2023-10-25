@@ -2,6 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 from . import views
 
+
 urlpatterns = [
     path('', views.Inicio, name='inicio'),
     path('Transaccion/', views.Transaccion, name="transaccion"),
@@ -14,5 +15,8 @@ urlpatterns = [
     path('Estadosfinancieros/', TemplateView.as_view(template_name='estadosFinancieros.html'), name='estadosFinancieros'),
     path('Sistemacosteo/',views.SistemaCosteo, name='sistemaCosteo'),
     path('Sistemacosteo/', TemplateView.as_view(template_name='sistemaCosteo.html'), name='sistemaCosteo'),
+    path('create_costos_directos/', views.create_costos_directos, name='create_costos_directos'),
+    path('create_mano_de_obra/', views.create_mano_de_obra, name='create_mano_de_obra'),
+    path('create_costos_indirectos/', views.create_costos_indirectos, name='create_costos_indirectos'),
         
 ]

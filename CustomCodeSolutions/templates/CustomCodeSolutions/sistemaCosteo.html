@@ -17,49 +17,56 @@
         <br>
         <br>
         <div class="form">
-        <form action="" method=post>
             <div class="fecha-producto-cliente">
-            {% csrf_token %}
             <label for="fecha-ex">Fecha</label>
             <input type="text" id="fecha-ex" name="fecha-ex">
             <label for="producto">Producto</label>
             <input type="text" name="producto" id="producto">
             <label for="cliente">Cliente</label>
             <input type="text" name="cliente" id="cliente">
-            <button>Agregar a la tabla final</button>
+            <input type="submit" value="Agregar">
             </div>
          <br>
+         <form action="{% url 'create_costos_directos' %}" method="POST">
+            {% csrf_token %}
             <h2>Registro de costos Directos</h2>
             <br>
             <div class="costos-directos">
-            <label for="concepto">Concepto</label>
-            <input type="text" name="concepto" id="concepto">
-            <label for="importe">Importe</label>
-            <input type="text" name="importe" id=""importe>
-           <button>Agregar</button>
+                <label for="concepto">Concepto</label>
+                <input type="text" name="concepto" id="concepto">
+                <label for="importe">Importe</label>
+                <input type="text" name="importe" id="importe">
+                <input type="submit" value="Agregar">
+            </form>
             </div>
         </div>
             <br>
             <h2>Regristro de mano de obra directa</h2>
             <br>
             <div class="mano-de-obra">
+            <form action="{%url 'create_mano_de_obra' %}" method="POST"> 
+                {% csrf_token %}
             <label for="trabajador">Trabajador</label>
             <input type="trabajador" name="trabajador" id="trabajador">
             <label for="horas-trabajadas">Horas Trabajas</label>
-            <input type="trabajador" name="horas-trabajadas" id="horas-trabajadas">
+            <input type="trabajador" name="horas_trabajadas" id="horas-trabajadas">
             <label for="costo-hora">Costo por hora</label>
-            <input type="trabajador" name="costo-hora" id="costo-hora">
-            <button>Agregar</button>
+            <input type="trabajador" name="costo_hora" id="costo-hora">
+            <input type="submit" value="Agregar">
+            </form>
          </div>
             <br>
             <div class="costos-indirectos"></div>
             <h2>Costos indirectos</h2>
             <br>
+            <form action="{%url 'create_costos_indirectos' %}" method="POST"> 
+                {% csrf_token %}
             <label for="importe">Importe</label>
             <input type="text" name="importe" id="importe">
-            <button>Agregar</button>
+            <input type="submit" value="Agregar">
             </div>
-        </form>
+            </form>
+       
         <br>
         <br>
         <br>
@@ -73,11 +80,12 @@
                 <th>Concepto</th>
                 <th>Importe</th>
             </tr>
+            {% for cd in costeo_directo %}
             <tr>
-                <td>Equipo y Electricidad</td>
-                <td>12000</td>
+              <td>{{cd.concepto}}</td>
+             <td>{{cd.importe}}</td>
             </tr>
-        
+            {% endfor %}
           </table>
     </div>
    
