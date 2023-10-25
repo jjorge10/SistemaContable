@@ -58,6 +58,12 @@ def create_costos_directos(request):
     context = {'costeo_directo': costeo_directo}
     return render(request, 'costos_directos/create.html', context)
 
+def mostrar_costo_directo(request):
+    costeo_directo = Costos_Directos.objects.all()
+    costeo_datos = {'costeo_directo': costeo_directo}
+    return render(request, 'CustomCodeSolutionssistemaCosteo.html', costeo_datos)
+
+
 
 def create_mano_de_obra(request):
     if request.method == 'POST':

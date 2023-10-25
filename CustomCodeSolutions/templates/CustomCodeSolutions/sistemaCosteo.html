@@ -75,18 +75,18 @@
     <br>
     <h3></h3>
     <div class="tabla-costos-directos table table-striped">
-          <table>
+        <table>
             <tr>
                 <th>Concepto</th>
                 <th>Importe</th>
             </tr>
             {% for cd in costeo_directo %}
-            <tr>
-              <td>{{cd.concepto}}</td>
-             <td>{{cd.importe}}</td>
-            </tr>
+                <tr>
+                    <td>{{ cd.concepto }}</td>
+                    <td>{{ cd.importe }}</td>
+                </tr>
             {% endfor %}
-          </table>
+        </table>
     </div>
    
     <div class="tabla-mano-de-obra table table-striped">
