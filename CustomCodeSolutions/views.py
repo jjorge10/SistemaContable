@@ -1,16 +1,27 @@
 from django.shortcuts import render, redirect
 from django.forms import modelformset_factory
 from django.forms import formset_factory
-from .forms import TransaccionForm, CuentaForm, CuentaForm2
+from .forms import TransaccionForm, CuentaForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from CustomCodeSolutions import models
 from json import dumps
 
 
 # Create your views here.
+@login_required
 def Inicio(request):
     return render(request,'CustomCodeSolutions/inicio.html')
 
+def login(request):
 
+    return render(request,'registration/login.html')
+
+def exit(request):
+    logout(request)
+    return redirect('inicio')
+
+@login_required
 def transaccion(request):
     
     CuentaFormSet = formset_factory(CuentaForm, extra=2)
@@ -50,7 +61,7 @@ def transaccion(request):
         }
         formct2=CuentaForm(datos3)
         cuenta_haber = models.cuenta.objects.get(cod_cuenta=request.POST['form-1-cod_cuenta'])
-        cuenta_haber.total_haber_c= cuenta_haber.total_debe_c + float(request.POST.get('form-1-haber'))
+        cuenta_haber.total_haber_c= cuenta_haber.total_haber_c + float(request.POST.get('form-1-haber'))
         cuenta_haber.saldo_cuenta=abs(cuenta_haber.total_debe_c-cuenta_haber.total_haber_c)
         cuenta_haber.save()
         
@@ -65,7 +76,7 @@ def transaccion(request):
     transacciones = models.transaccion.objects.all()
     return render(request, 'transacciones.html', {'form': form, 'formct' : formct,'transacciones': transacciones})
     
-
+@login_required
 def eliminarTransaccion(request, id):
     t = models.transaccion.objects.get(num_transaccion=id)
     cuentas_tran = models.cuenta_transaccion.objects.filter(num_transaccion= t.num_transaccion).values('cod_cuenta','debe','haber')
@@ -78,13 +89,12 @@ def eliminarTransaccion(request, id):
     t.delete()
 
     return redirect('transacciones.html')
-    
+@login_required   
 def catalogo_cuentas(request):
-    tipos_cuenta = models.tipo_cuenta.objects.all()
     cuentas = models.cuenta.objects.all()
-    return render(request, 'catalogo_cuentas.html', {'tipos_cuenta': tipos_cuenta, 'cuentas': cuentas})
+    return render(request, 'CustomCodeSolutions/catalogocuentas.html', {'cuentas': cuentas})
 
-
+@login_required
 def crearCuenta(request):
     if request.method == 'POST':
         form = CuentaForm(request.POST)  # Utiliza CuentaForm, no Cuenta
@@ -96,7 +106,7 @@ def crearCuenta(request):
 
     cuentas = models.transaccion.objects.all()
     return render(request, 'crearCuenta.html', {'form': form, 'cuentas': cuentas})
-
+@login_required
 def estadosFinancieros(request):
     cuentas_balance = models.cuenta.objects.filter(id_es= 1).values('cod_cuenta', 'nombre_cuenta', 'saldo_cuenta', 'total_debe_c', 'total_haber_c')
     cuentas_resultado = models.cuenta.objects.filter(id_es=2).values('cod_cuenta', 'nombre_cuenta', 'saldo_cuenta', 'total_debe_c', 'total_haber_c')

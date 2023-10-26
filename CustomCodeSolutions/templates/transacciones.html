@@ -34,7 +34,11 @@ label {
 </head>
 
 <body>
+    
     <h1>Registrar y Ver Transacciones</h1>
+    <br>
+    
+    <a class="btn btn-primary" href="{% url 'inicio' %}" role="button">Regresar</a>
     <div class="contenedor">
         <form method="post" id="transaccion-form">
             {% csrf_token %}

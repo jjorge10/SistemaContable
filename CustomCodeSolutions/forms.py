@@ -9,6 +9,7 @@ class TransaccionForm(forms.ModelForm):
         fields = ['num_transaccion', 'fecha','descripcion', 'total_debe_tran', 'total_haber_tran']
         widgets = {
             'fecha': DateInput(attrs={'type': 'date'}),
+            'num_transaccion': forms.NumberInput(attrs={'readonly': 'readonly'}),
         }
 
 class CuentaForm(forms.ModelForm):
