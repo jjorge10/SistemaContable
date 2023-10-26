@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Título de la página específica{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Catálogo de Cuentas</h1>
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Código de Cuenta</th>
+                        <th>Nombre de Cuenta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cuenta in cuentas %}
+                    <tr>
+                        <td>{{ cuenta.cod_cuenta }}</td>
+                        <td>{{ cuenta.nombre_cuenta }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

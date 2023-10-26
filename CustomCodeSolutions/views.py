@@ -4,13 +4,27 @@ from django.forms import formset_factory
 from .forms import TransaccionForm, CuentaForm, CuentaForm2
 from CustomCodeSolutions import models
 from json import dumps
+from decimal import Decimal  # Añadir importación Decimal
+from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+
 
 
 # Create your views here.
+@login_required
 def Inicio(request):
     return render(request,'CustomCodeSolutions/inicio.html')
 
+def login(request):
 
+    return render(request,'registration/login.html')
+
+def exit(request):
+    logout(request)
+    return redirect('inicio')
+
+@login_required
 def transaccion(request):
     
     CuentaFormSet = formset_factory(CuentaForm, extra=2)
@@ -51,19 +65,19 @@ def transaccion(request):
     transacciones = models.transaccion.objects.all()
     return render(request, 'transacciones.html', {'form': form, 'formct' : formct,'transacciones': transacciones})
     
-
-def eliminarTransaccion(request, id):
-    t = models.transaccion.objects.get(id=id)
+@login_required
+def eliminarTransaccion(request, numero_transaccion):
+    t = models.transaccion.objects.get(id=numero_transaccion)
     t.delete()
 
     return redirect('transacciones.html')
-    
+@login_required   
 def catalogo_cuentas(request):
     tipos_cuenta = models.tipo_cuenta.objects.all()
     cuentas = models.cuenta.objects.all()
     return render(request, 'catalogo_cuentas.html', {'tipos_cuenta': tipos_cuenta, 'cuentas': cuentas})
 
-
+@login_required
 def crearCuenta(request):
     if request.method == 'POST':
         form = CuentaForm(request.POST)  # Utiliza CuentaForm, no Cuenta
@@ -75,7 +89,7 @@ def crearCuenta(request):
 
     cuentas = models.transaccion.objects.all()
     return render(request, 'crearCuenta.html', {'form': form, 'cuentas': cuentas})
-
+@login_required
 def estadosFinancieros(request):
     cuentas_balance = models.cuenta.objects.filter(id_es= 1).values('cod_cuenta', 'nombre_cuenta', 'saldo_cuenta', 'total_debe_c', 'total_haber_c')
     cuentas_resultado = models.cuenta.objects.filter(id_es=2).values('cod_cuenta', 'nombre_cuenta', 'saldo_cuenta', 'total_debe_c', 'total_haber_c')
@@ -135,5 +149,99 @@ def estadosFinancieros(request):
 
 
     return render(request, 'CustomCodeSolutions/pruebaes.html',{'datos_balance': dc_balance,'pie_balance':pie_balance ,'datos_resultado':dc_resultado, 'pie_resultado': pie_resultado})
+@login_required
+def SistemaCosteo(request):
+    costos_directos = models.Costos_Directos.objects.all()
+    mano_de_obra = models.Mano_de_Obra.objects.all()
+    costos_indirectos = models.CostosIndirectos.objects.all()
+    tabla  = models.Tabla_Final.objects.all()
 
-       
+
+    return render(request,'sistemaCosteo.html', {'costos_directos': costos_directos, 'mano_de_obra': mano_de_obra, 'costos_indirectos': costos_indirectos, 'tabla': tabla})
+@login_required
+def create_tabla_final(request):
+    if request.method == 'POST':
+        fecha_ex = request.POST['fecha-ex']
+        productox = request.POST['producto']
+        clientex = request.POST['cliente']
+
+        # Obtener costos directos
+        suma_costo = models.Costos_Directos.objects.aggregate(total_importes=Sum('importe'))['total_importes']
+
+        # Obtener costo de mano de obra
+        suma_mano = models.Mano_de_Obra.objects.aggregate(total_mano_de_obra=Sum('Total_Trabajador'))['total_mano_de_obra'] or 0
+
+        # Obtener costos indirectos
+        costos_indirectos = models.CostosIndirectos.objects.all()
+        suma_indirectos = costos_indirectos.aggregate(total=Sum('importe'))['total'] or Decimal(0)
+
+        # Calcular el costo total
+        costo_total = suma_costo + suma_mano + suma_indirectos
+
+        # Crear y guardar la tabla final
+        tabla_final = models.Tabla_Final(fecha=fecha_ex, producto=productox, cliente=clientex, costos_directos=suma_costo, mano_de_obra=suma_mano, costos_indirectos=suma_indirectos, costo_total=costo_total)
+        tabla_final.save()
+        models.Costos_Directos.objects.all().delete()
+        models.Mano_de_Obra.objects.all().delete()
+        models.CostosIndirectos.objects.all().delete()
+
+        return redirect('/sistemaCosteo/')
+    
+    return render(request, 'CustomCodeSolutions/sistemaCosteo.html')
+@login_required
+def create_costos_directos(request):
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        concepto = request.POST['concepto']
+        importe = request.POST['importe']
+
+        # Crear un nuevo objeto de costos directos
+        costos_directos = models.Costos_Directos(concepto=concepto, importe=importe)
+
+        # Guardar el objeto de costos directos en la base de datos
+        costos_directos.save()
+
+
+        # Redireccionar al usuario a la página principal
+        return redirect('/sistemaCosteo/')
+
+    
+    
+    return render(request, 'costos_directos/create.html')
+
+@login_required
+def create_mano_de_obra(request):
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        trabajador = request.POST['trabajador']
+        horas_trabajas = request.POST['horas_trabajadas']
+        costo_hora = request.POST['costo_hora']
+
+        total_trabajador =  int(horas_trabajas)* int(costo_hora)
+
+
+        # Crear un nuevo objeto de costos directos
+        mano_de_obra = models.Mano_de_Obra(nombre_del_trabajador=trabajador ,tiempo_de_trabajo= horas_trabajas,costo_por_hora=costo_hora, Total_Trabajador=total_trabajador )
+
+        # Guardar el objeto de costos directos en la base de datos
+        mano_de_obra.save()
+
+        # Redireccionar al usuario a la página principal
+        return redirect('/sistemaCosteo/')
+
+    return render(request, 'mano_de_obra/create.html')
+
+@login_required
+def create_costos_indirectos(request):
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        importe = request.POST['importe']
+        # Crear un nuevo objeto de costos directos
+        costo_indirectos = models.CostosIndirectos(importe=importe)
+        # Guardar el objeto de costos directos en la base de datos
+        costo_indirectos.save()
+
+        # Redireccionar al usuario a la página principal
+        return redirect('/sistemaCosteo/')
+
+    return render(request, 'costos_inderectos/create.html')

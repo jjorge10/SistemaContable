@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}Título de la página específica{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="card">
+    <div class="card-body">
+        <div class="contenedo">
+            <div class="titul">
+                <h1>Sistema de costeo</h1>
+            </div>
+            <br>
+            <br>
+            <div class="form">
+                <form action="{% url 'create_tabla_final' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="fecha-producto-cliente">
+                        <label for="fecha-ex">Fecha</label>
+                        <input type="date" id="fecha-ex" name="fecha-ex">
+                        <label for="producto">Producto</label>
+                        <input type="text" name="producto" id="producto">
+                        <label for="cliente">Cliente</label>
+                        <input type="text" name="cliente" id="cliente">
+                        <input type="submit" value="Agregar">
+                    </div>
+                </form>
+                <br>
+                <form action="{% url 'create_costos_directos' %}" method="POST">
+                    {% csrf_token %}
+                    <h2>Registro de costos Directos</h2>
+                    <br>
+                    <div class="costos-directos">
+                        <label for="concepto">Concepto</label>
+                        <input type="text" name="concepto" id="concepto">
+                        <label for="importe">Importe</label>
+                        <input type="text" name="importe" id="importe">
+                        <input type="submit" value="Agregar">
+                </form>
+            </div>
+        </div>
+        <br>
+        <h2>Regristro de mano de obra directa</h2>
+        <br>
+        <div class="mano-de-obra">
+            <form action="{%url 'create_mano_de_obra' %}" method="POST">
+                {% csrf_token %}
+                <label for="trabajador">Trabajador</label>
+                <input type="trabajador" name="trabajador" id="trabajador">
+                <label for="horas-trabajadas">Horas Trabajas</label>
+                <input type="trabajador" name="horas_trabajadas" id="horas-trabajadas">
+                <label for="costo-hora">Costo por hora</label>
+                <input type="trabajador" name="costo_hora" id="costo-hora">
+                <input type="submit" value="Agregar">
+            </form>
+        </div>
+        <br>
+        <div class="costos-indirectos"></div>
+        <h2>Costos indirectos</h2>
+        <br>
+        <form action="{%url 'create_costos_indirectos' %}" method="POST">
+            {% csrf_token %}
+            <label for="importe">Importe</label>
+            <input type="text" name="importe" id="importe">
+            <input type="submit" value="Agregar">
+            </div>
+        </form>
+        
+        <br>
+        <br>
+        <br>
+        <div class="tablas-costos">
+            <div class="tres-tablas">
+                <br>
+                <h3></h3>
+                <div class="tabla-costos-directos table table-striped">
+                    <table>
+                        <tr>
+                            <th>Concepto</th>
+                            <th>Importe</th>
+                        </tr>
+                        {% for dato in costos_directos %}
+                        <tr>
+                            <td>{{ dato.concepto }}</td>
+                            <td>{{ dato.importe }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+        
+        
+                <div class="tabla-mano-de-obra table table-striped">
+                    <table>
+                        <tr>
+                            <th>Trabajador</th>
+                            <th>Tiempo en horas</th>
+                            <th>Costo por horas</th>
+                            <th>Total mano de obra</th>
+                        </tr>
+                        {% for obra in mano_de_obra %}
+                        <tr>
+                            <td>{{ obra.nombre_del_trabajador }}</td>
+                            <td>{{ obra.tiempo_de_trabajo }}</td>
+                            <td>{{ obra.costo_por_hora }}</td>
+                            <td>{{ obra.Total_Trabajador }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="tabla-costos-indirectos table-striped">
+                    <table>
+                        <tr>
+                            <th>Importe</th>
+                        </tr>
+                        {% for imp in costos_indirectos %}
+                        <tr>
+                            <td>{{ imp.importe }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="tabla-mano-de-obra table table-striped">
+            <table>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Cliente</th>
+                    <th>Costos directos</th>
+                    <th>Mano de obra</th>
+                    <th>Costos Indirectos</th>
+                    <th>Costo Total</th>
+                </tr>
+                {% for final in tabla %}
+                <tr>
+                    <td>{{ final.fecha }}</td>
+                    <td>{{ final.producto }}</td>
+                    <td>{{ final.cliente }}</td>
+                    <td>{{ final.costos_directos }}</td>
+                    <td>{{ final.mano_de_obra }}</td>
+                    <td>{{ final.costos_indirectos }}</td>
+                    <td>{{ final.costo_total }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        </div>
+        
+        </div>
+    </div>
+</div>
+{% endblock %}
