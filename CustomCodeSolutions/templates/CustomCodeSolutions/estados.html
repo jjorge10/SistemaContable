@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-    Balance General
+   <h2> Balance General </h2> 
     <table class="table table-bordered table-striped">
         <tr>
             <th>Código de Cuenta</th>
@@ -58,7 +58,7 @@
             <td>{{ pie_balance.total_haber }}</td>
         </tr>
     </table>
-    Estado de Resultados
+    <h2> Estado de Resultados </h2>
     <!--Tabla Para el Estado de Resultados------------------------------------------->
     <table class="table table-bordered table-striped">
         <tr>
@@ -89,7 +89,28 @@
             <td>{% if pie_resultado.lado_resultado == 'haber' %}{{ pie_resultado.resultado_ejerc  }}{% endif %}</td>
         </tr>
     </table>
-    <!-------------------------------------------------------------------------------------------------->
+
+    <h2>Estado de Capital</h2>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Código de Cuenta</th>
+            <th>Nombre de Cuenta</th>
+            <th>Debe</th>
+            <th>Haber</th>
+        </tr>
+        
+        <tr>
+            <td>{{ dc_capital.cod_cuenta }}</td>
+            <td>{{ dc_capital.nombre_cuenta }}</td>
+            <td>{% if dc_capital.lado_saldo == 'debe' %}{{ dc_capital.saldo_cuenta }}{% endif %}</td>
+            <td>{% if dc_capital.lado_saldo == 'haber' %}{{ dc_capital.saldo_cuenta }}{% endif %}</td>
+
+        </tr>
+        
+
+    </table>
+    <!-----Estado de capital--------------------------------------------------------------------------------------------->
+
     <script>
         //let cuentas = JSON.parse('{{ datos_balance|safe }}');
         //let res = JSON.parse('{{ datos_resultado|safe }}')

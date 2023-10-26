@@ -41,8 +41,8 @@ class transaccion(models.Model):
     num_transaccion= models.IntegerField(primary_key=True, unique=True, null=False, default=get_default_value)
     descripcion=models.CharField(max_length=500, null=False)
     fecha= models.DateField(unique=False, null=False)
-    total_debe_tran= models.FloatField(null=False)
-    total_haber_tran= models.FloatField(null=False)
+    total_debe_tran= models.FloatField(null=False,default=0.0)
+    total_haber_tran= models.FloatField(null=False,default=0.0)
 
 class cuenta_transaccion(models.Model):
     id_ct= models.AutoField(primary_key=True, unique=True, null=False)

@@ -156,14 +156,14 @@ label {
                 <td>{{ transaccion.total_debe_tran }}</td>
                 <td>{{ transaccion.total_haber_tran }}</td>
                 <td>
-                    <a href="/eliminarTransaccion/{{transaccion.id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                    <a href="/eliminarTransaccion/{{transaccion.num_transaccion}}" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>          
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <script>
+   <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const formulario = document.getElementById('transaccion-form');
     
@@ -181,7 +181,7 @@ label {
                 console.log('Datos del formulario POST:', formDataObject);
             });
         });
-    </script>
+    </script> -->
     
     
 </body>

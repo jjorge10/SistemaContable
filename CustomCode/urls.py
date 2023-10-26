@@ -25,6 +25,6 @@ urlpatterns = [
     path('transacciones/', views.transaccion, name='transacciones.html'),
     path('eliminarTransaccion/<id>/', views.eliminarTransaccion, name='eliminarTransaccion'),
     path('crearCuenta/', views.crearCuenta, name='crearCuenta.html'),
-    path('pruebaes/',views.estadosFinancieros,name='pruebaes')
+    path('estados/',views.estadosFinancieros,name='pruebaes')
 
 ]
